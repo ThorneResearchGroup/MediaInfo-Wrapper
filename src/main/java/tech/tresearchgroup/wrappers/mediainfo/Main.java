@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+@CommandLine.Command(name = "MediaInfo", mixinStandardHelpOptions = true,
+        description = "TRG MediaInfo wrapper")
 public class Main implements Callable<Integer> {
     @CommandLine.Parameters(index = "0")
     private String file;
