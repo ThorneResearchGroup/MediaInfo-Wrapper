@@ -1,8 +1,8 @@
-package tech.tresearchgroup.mediainfo;
+package tech.tresearchgroup.wrappers.mediainfo;
 
 import picocli.CommandLine;
-import tech.tresearchgroup.mediainfo.controller.MediaInfoController;
-import tech.tresearchgroup.mediainfo.model.MediaInfoOptions;
+import tech.tresearchgroup.wrappers.mediainfo.controller.MediaInfoController;
+import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
