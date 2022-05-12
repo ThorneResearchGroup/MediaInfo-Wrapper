@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-public class MediaInfo implements Callable<Integer> {
+public class Main implements Callable<Integer> {
     @CommandLine.Parameters(index = "0")
     private String file;
 
@@ -22,9 +22,16 @@ public class MediaInfo implements Callable<Integer> {
     public Integer call() {
         List<String> options = new ArrayList<>();
         options.add("mediainfo");
-        options.addAll(MediaInfoController.getOptions(mediaInfoOptions));
+        if(mediaInfoOptions != null) {
+            options.addAll(MediaInfoController.getOptions(mediaInfoOptions));
+        }
         options.add(file);
         return execute(options);
+    }
+
+    public static void main(String... args) {
+        int exitCode = new CommandLine(new Main()).execute(args);
+        System.exit(exitCode);
     }
 
     public static int execute(List<String> options) {
