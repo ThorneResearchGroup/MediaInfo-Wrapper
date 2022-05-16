@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
 
 @CommandLine.Command(name = "MediaInfo", mixinStandardHelpOptions = true,
         description = "TRG MediaInfo wrapper")
-public class Main implements Callable<Integer> {
+public class MediaInfo implements Callable<Integer> {
     @CommandLine.Parameters(index = "0")
     private String file;
 
@@ -22,18 +22,43 @@ public class Main implements Callable<Integer> {
 
     @Override
     public Integer call() {
+        return execute(getOptions());
+    }
+
+    public List<String> getOptions() {
         List<String> options = new ArrayList<>();
         options.add("mediainfo");
         if(mediaInfoOptions != null) {
             options.addAll(MediaInfoController.getOptions(mediaInfoOptions));
         }
         options.add(file);
-        return execute(options);
+        return options;
     }
 
     public static void main(String... args) {
-        int exitCode = new CommandLine(new Main()).execute(args);
+        int exitCode = new CommandLine(new MediaInfo()).execute(args);
         System.exit(exitCode);
+    }
+
+    public static String getOutput(List<String> options) {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command(options);
+        System.out.println(options);
+        try {
+            Process process = processBuilder.start();
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            while ((line = errorReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            errorReader.close();
+            process.waitFor();
+            return stringBuilder.toString();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static int execute(List<String> options) {
