@@ -21,8 +21,7 @@ public class MediaInfoController {
             optionsList.add("--Full");
         }
         if(mediaInfoOptions.getOutput() != null) {
-            optionsList.add("--Output");
-            optionsList.add(mediaInfoOptions.getOutput());
+            optionsList.add("--Output=" + mediaInfoOptions.getOutput());
         }
         if(mediaInfoOptions.getAcquisitionDataOutputMode() != null) {
             optionsList.add("--AcquisitionDataOutputMode");

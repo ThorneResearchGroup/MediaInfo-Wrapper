@@ -1,5 +1,6 @@
 package tech.tresearchgroup.wrappers.mediainfo;
 
+import lombok.Data;
 import picocli.CommandLine;
 import tech.tresearchgroup.wrappers.mediainfo.controller.MediaInfoController;
 import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOptions;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+@Data
 @CommandLine.Command(name = "MediaInfo", mixinStandardHelpOptions = true,
         description = "TRG MediaInfo wrapper")
 public class MediaInfo implements Callable<Integer> {
@@ -19,6 +21,8 @@ public class MediaInfo implements Callable<Integer> {
 
     @CommandLine.ArgGroup
     private MediaInfoOptions mediaInfoOptions;
+
+    private boolean debug = false;
 
     @Override
     public Integer call() {
@@ -31,7 +35,7 @@ public class MediaInfo implements Callable<Integer> {
         if(mediaInfoOptions != null) {
             options.addAll(MediaInfoController.getOptions(mediaInfoOptions));
         }
-        options.add(file);
+        options.add("\"" + file + "\"");
         return options;
     }
 
@@ -48,11 +52,16 @@ public class MediaInfo implements Callable<Integer> {
             Process process = processBuilder.start();
             StringBuilder stringBuilder = new StringBuilder();
             String line;
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            while ((line = errorReader.readLine()) != null) {
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line);
+                if(debug) {
+                    System.out.println(line);
+                }
             }
-            errorReader.close();
+            reader.close();
+
             process.waitFor();
             return stringBuilder.toString();
         } catch (IOException | InterruptedException e) {
