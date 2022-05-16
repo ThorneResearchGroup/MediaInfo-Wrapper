@@ -40,7 +40,7 @@ public class MediaInfo implements Callable<Integer> {
         System.exit(exitCode);
     }
 
-    public static String getOutput(List<String> options) {
+    public String getOutput(List<String> options) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command(options);
         System.out.println(options);
