@@ -1,4 +1,4 @@
-package tech.tresearchgroup.wrappers.mediainfo.model;
+package tech.tresearchgroup.wrappers.mediainfo.model.options;
 
 import lombok.Data;
 import picocli.CommandLine;

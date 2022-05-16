@@ -1,9 +1,11 @@
 package tech.tresearchgroup.wrappers.mediainfo;
 
+import com.google.gson.Gson;
 import lombok.Data;
 import picocli.CommandLine;
 import tech.tresearchgroup.wrappers.mediainfo.controller.MediaInfoController;
-import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOptions;
+import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOutput;
+import tech.tresearchgroup.wrappers.mediainfo.model.options.MediaInfoOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,7 +46,7 @@ public class MediaInfo implements Callable<Integer> {
         System.exit(exitCode);
     }
 
-    public String getOutput(List<String> options) {
+    public MediaInfoOutput getOutput(List<String> options) {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command(options);
         System.out.println(options);
@@ -63,7 +65,7 @@ public class MediaInfo implements Callable<Integer> {
             reader.close();
 
             process.waitFor();
-            return stringBuilder.toString();
+            return new Gson().fromJson(stringBuilder.toString(), MediaInfoOutput.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
