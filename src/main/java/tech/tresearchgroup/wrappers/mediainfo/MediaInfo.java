@@ -3,9 +3,9 @@ package tech.tresearchgroup.wrappers.mediainfo;
 import com.google.gson.Gson;
 import lombok.Data;
 import picocli.CommandLine;
+import tech.tresearchgroup.schemas.mediainfo.MediaInfoOutput;
 import tech.tresearchgroup.wrappers.mediainfo.controller.MediaInfoController;
-import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOutput;
-import tech.tresearchgroup.wrappers.mediainfo.model.options.MediaInfoOptions;
+import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOptions;
 
 import java.io.BufferedReader;
 import java.io.IOException;

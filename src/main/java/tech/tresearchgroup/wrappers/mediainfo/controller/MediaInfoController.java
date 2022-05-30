@@ -1,6 +1,6 @@
 package tech.tresearchgroup.wrappers.mediainfo.controller;
 
-import tech.tresearchgroup.wrappers.mediainfo.model.options.MediaInfoOptions;
+import tech.tresearchgroup.wrappers.mediainfo.model.MediaInfoOptions;
 
 import java.util.ArrayList;
 import java.util.List;
